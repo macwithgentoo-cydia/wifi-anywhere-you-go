@@ -1,0 +1,7 @@
+Origin: macwithgentoo-cydia
+Label: WiFi Anywhere You Go
+Suite: stable
+Codename: stable
+Architectures: iphoneos-arm iphoneos-arm64
+Components: main
+Description: WiFi Anywhere You Go package repository
