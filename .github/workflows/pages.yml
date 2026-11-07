@@ -1,0 +1,70 @@
+name: Build and deploy Cydia repository
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install APT repository tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y dpkg-dev gzip
+
+      - name: Build package index and Release metadata
+        working-directory: repo
+        run: |
+          dpkg-scanpackages --multiversion debs /dev/null > Packages
+          gzip -9 -k -f Packages
+          {
+            echo "Origin: macwithgentoo-cydia"
+            echo "Label: WiFi Anywhere You Go"
+            echo "Suite: stable"
+            echo "Codename: stable"
+            echo "Architectures: iphoneos-arm iphoneos-arm64"
+            echo "Components: main"
+            echo "Description: WiFi Anywhere You Go package repository"
+            echo "MD5Sum:"
+            for file in Packages Packages.gz; do
+              printf " %s %16s %s\n" "$(md5sum "$file" | cut -d' ' -f1)" "$(stat -c%s "$file")" "$file"
+            done
+            echo "SHA256:"
+            for file in Packages Packages.gz; do
+              printf " %s %16s %s\n" "$(sha256sum "$file" | cut -d' ' -f1)" "$(stat -c%s "$file")" "$file"
+            done
+          } > Release
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
