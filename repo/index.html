@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10131c">
+  <title>WiFi Anywhere You Go — Cydia Repository</title>
+  <meta name="description" content="The official package repository for WiFi Anywhere You Go.">
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #10131c;
+      color: #f4f6ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 32px 18px;
+      background: radial-gradient(ellipse at top, #202b49 0, #10131c 58%);
+    }
+    main {
+      width: min(100%, 680px);
+      padding: 38px;
+      border: 1px solid #30394e;
+      border-radius: 22px;
+      background: rgba(20, 25, 39, .94);
+      box-shadow: 0 24px 80px #0006;
+    }
+    .mark {
+      display: grid;
+      place-items: center;
+      width: 62px;
+      height: 62px;
+      border-radius: 18px;
+      background: #263b70;
+      font-size: 30px;
+      margin-bottom: 24px;
+    }
+    h1 { margin: 0 0 12px; font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; }
+    .intro { color: #b8c2d9; line-height: 1.65; margin: 0 0 26px; }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 11px;
+      border: 1px solid #66532b;
+      border-radius: 999px;
+      color: #f3cf83;
+      background: #332a19;
+      font-size: .85rem;
+      margin-bottom: 22px;
+    }
+    .panel {
+      padding: 20px;
+      border: 1px solid #30394e;
+      border-radius: 14px;
+      background: #171e2d;
+    }
+    .panel h2 { margin: 0 0 10px; font-size: 1.1rem; }
+    code {
+      display: block;
+      overflow-wrap: anywhere;
+      padding: 13px;
+      border-radius: 9px;
+      background: #0b0e15;
+      color: #a9c7ff;
+      font-size: .92rem;
+    }
+    .button {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 11px 16px;
+      border-radius: 9px;
+      background: #4779e6;
+      color: white;
+      text-decoration: none;
+      font-weight: 650;
+    }
+    .button:hover { background: #5a89f0; }
+    .note { color: #aab4ca; font-size: .92rem; line-height: 1.6; }
+    footer { margin-top: 28px; color: #8792aa; font-size: .82rem; }
+    a { color: #9bbaff; }
+    @media (max-width: 480px) { main { padding: 25px 20px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="mark" aria-hidden="true">📶</div>
+    <div class="status"><span aria-hidden="true">●</span> Repository setup in progress</div>
+    <h1>WiFi Anywhere You Go</h1>
+    <p class="intro">Welcome to the package repository for WiFi Anywhere You Go. This page will list compatible packages when they are published.</p>
+
+    <section class="panel" aria-labelledby="add-source">
+      <h2 id="add-source">Add this repository in Cydia</h2>
+      <p class="note">Copy this address and add it under <strong>Sources → Edit → Add</strong> in Cydia, once GitHub Pages deployment is enabled.</p>
+      <code id="repo-url">https://macwithgentoo-cydia.github.io/wifi-anywhere-you-go/repo/</code>
+      <button class="button" id="copy-button" type="button">Copy repository URL</button>
+      <p class="note" id="copy-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <p class="note">There are currently no installable packages in this repository. Package availability and compatibility will be listed here as releases are published.</p>
+    <footer>Hosted with GitHub Pages · <a href="https://github.com/macwithgentoo-cydia/wifi-anywhere-you-go">View source on GitHub</a></footer>
+  </main>
+  <script>
+    const copyButton = document.getElementById("copy-button");
+    const repoUrl = document.getElementById("repo-url").textContent.trim();
+    const copyStatus = document.getElementById("copy-status");
+    copyButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(repoUrl);
+        copyStatus.textContent = "Repository URL copied.";
+      } catch {
+        copyStatus.textContent = "Copy isn't available here. Select the URL above and copy it manually.";
+      }
+    });
+  </script>
+</body>
+</html>
