@@ -1,0 +1,9 @@
+Package: com.macwithgentoo.wifieverywhere
+Name: WiFiEverywhere
+Version: 1.0.0
+Architecture: iphoneos-arm
+Description: A simple WiFi Everywhere preference toggle.
+Maintainer: macwithgentoo-cydia
+Author: macwithgentoo-cydia
+Section: Tweaks
+Depends: mobilesubstrate, preferenceloader
